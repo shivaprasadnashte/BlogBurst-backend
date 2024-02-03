@@ -11,8 +11,27 @@ blogRouter.route("/").post(async (req, res) => {
     author: req.body.author,
     userId: req.body.userId,
   });
-  const data = await blog.save(); 
+  const data = await blog.save();
   return res.status(201).json(data);
+});
+
+blogRouter.route("/getblogbyId/:id").get(async (req, res) => {
+  const { id } = req.params;
+
+  const data = await blogSchema.Blog.findById(id);
+
+  // console.log(data);
+
+  const user = data.userId;
+
+  const userDetail = await blogSchema.User.findById(user);
+
+  const blogDetails = {
+    ...data._doc,
+    author: userDetail.name,
+  };
+
+  res.status(200).json(blogDetails);
 });
 blogRouter.route("/blogbycategory").get((req, res) => {
   blogSchema.Blog.findOne({ category: req.body.category }).then((blog) => {
