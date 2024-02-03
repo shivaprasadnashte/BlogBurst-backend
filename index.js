@@ -16,8 +16,8 @@ connectDb();
  
 app.use("/signup",signupRouter); 
 app.use("/login", loginRouter); 
-app.use("/blog", blogRouter);
-app.use("/:id", blogRouter); 
+app.use("/blogs", blogRouter);
+app.use("/blog/:id", blogRouter); 
 app.use("/comment", commentRouter);
 
 app.listen(5000, () => {
